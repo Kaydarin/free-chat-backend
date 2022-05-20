@@ -19,15 +19,18 @@ Router.ws('/connect', {
     // max_payload_length: 32 * 1024
 }, (ws) => {
 
-
     console.log(ws.ip + ' is now connected using websockets!');
 
+    ws.subscribe('chat-all');
+
     ws.on('message', (message) => {
-        const status = ws.send(message);
-        console.log('is message send?', status);
+        ws.publish('chat-all', message);
     });
 
-    ws.on('close', () => console.log(ws.ip + ' has now disconnected!'));
+    ws.on('close', () => {
+        ws.unsubscribe('chat-all');
+        console.log(ws.ip + ' has now disconnected!')
+    });
 });
 
 // Websocket connections can now connect to '/ws/connect'
