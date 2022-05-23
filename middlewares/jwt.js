@@ -16,15 +16,15 @@ const JwtMiddleware = (request, response, next) => {
                 if (payload.id == 1 || payload.id == 2) {
                     return next();
                 } else {
-                    response.status(401)
+                    response.status(403)
                         .clearCookie('token')
-                        .send('Unauthorized')
+                        .send('Forbidden')
                 }
 
             } else {
                 response
-                    .status(401)
-                    .send('Unauthorized')
+                    .status(403)
+                    .send('Forbidden')
             }
         })
     } else {
