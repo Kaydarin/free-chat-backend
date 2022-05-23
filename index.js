@@ -19,7 +19,7 @@ Server.get('/', (request, response) => {
 })
 
 Server.options('/*', async (request, response) => {
-    res.send('Preflight passed');
+    response.send('Preflight passed');
 })
 
 Server.use(CorsMiddleware);
