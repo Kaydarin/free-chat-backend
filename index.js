@@ -2,6 +2,7 @@ import "dotenv/config.js";
 import HyperExpress from 'hyper-express';
 import Api from './routes/api.js';
 import Socket from './routes/socket.js'
+import CorsMiddleware from './middlewares/cors.js'
 
 const Server = new HyperExpress.Server();
 
@@ -16,7 +17,10 @@ Server.get('/', (request, response) => {
     response.send('Hello World');
 })
 
-Server.use('/api', Api);
+Server.options('/*', async (request, response) => {
+    res.send('Preflight passed');
+})
 
-// Websocket connections can now connect to '/ws/connect'
+Server.use(CorsMiddleware);
+Server.use('/api', Api);
 Server.use('/ws', Socket);
