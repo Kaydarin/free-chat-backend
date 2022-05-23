@@ -5,6 +5,7 @@ import * as jose from 'jose';
 const Router = new HyperExpress.Router();
 
 Router.post('/test', (request, response) => {
+    response.type('text/plain');
     response.send('This is test');
 });
 
@@ -93,8 +94,9 @@ Router.post('/login', async (request, response) => {
                 .json(resObj)
 
         } else {
-            response.status(401);
-            response.send('User is not exist');
+            response.status(401)
+                .type('text/plain')
+                .send('User is not exist');
         }
     })
 });

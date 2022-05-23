@@ -18,12 +18,14 @@ const JwtMiddleware = (request, response, next) => {
                 } else {
                     response.status(403)
                         .clearCookie('token')
+                        .type('text/plain')
                         .send('Forbidden')
                 }
 
             } else {
                 response
                     .status(403)
+                    .type('text/plain')
                     .send('Forbidden')
             }
         })
