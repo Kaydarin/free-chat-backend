@@ -95,7 +95,7 @@ Router.post('/login', async (request, response) => {
                     // maxAge: 28800, // 8h
                     httpOnly: true,
                     secure: true,
-                    sameSite: false
+                    sameSite: 'none'
                 })
                 .status(200)
                 .json(resObj)
@@ -115,7 +115,7 @@ Router.post('/login', async (request, response) => {
                     // maxAge: 28800, // 8h
                     httpOnly: true,
                     secure: true,
-                    sameSite: false
+                    sameSite: 'none'
                 })
                 .status(200)
                 .json(resObj)
