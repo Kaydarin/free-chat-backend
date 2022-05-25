@@ -9,6 +9,33 @@ Router.post('/test', (request, response) => {
     response.send('This is test');
 });
 
+Router.post('/connect', (request, response) => {
+
+    const id = request.uid;
+
+    response.atomic(async () => {
+
+        const privateKeyString = process.env.JWT_PRIVATE_KEY.replace(/\\n/g, '\n')
+        const privateKey = await jose.importPKCS8(privateKeyString, 'RS256')
+
+        const jwt = await new jose.SignJWT({ id })
+            .setProtectedHeader({ alg: 'RS256' })
+            .setIssuedAt()
+            .setIssuer('app:freechat')
+            .setAudience(`for:user${id}`)
+            .setExpirationTime('8h') // 30 minutes
+            .sign(privateKey)
+
+        const resObj = {
+            socketToken: jwt
+        }
+
+        response
+            .status(200)
+            .json(resObj)
+    })
+});
+
 Router.post('/login', async (request, response) => {
 
     /**
@@ -94,9 +121,12 @@ Router.post('/login', async (request, response) => {
                 .json(resObj)
 
         } else {
+            resObj = {
+                message: 'User is not exist'
+            }
+
             response.status(401)
-                .type('text/plain')
-                .send('User is not exist');
+                .json(resObj);
         }
     })
 });

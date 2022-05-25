@@ -25,4 +25,5 @@ Server.options('/*', async (request, response) => {
 Server.use(CorsMiddleware);
 Server.use('/api', JwtMiddleware);
 Server.use('/api', Api);
+Server.use('/ws', JwtMiddleware);
 Server.use('/ws', Socket);
