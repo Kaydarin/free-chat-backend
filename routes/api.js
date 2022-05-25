@@ -67,7 +67,7 @@ Router.post('/login', async (request, response) => {
             .setIssuedAt()
             .setIssuer('app:freechat')
             .setAudience(`for:user${id}`)
-            .setExpirationTime('8h')
+            .setExpirationTime('1800s') // 30 minutes
             .sign(privateKey)
 
         return jwt;
@@ -88,11 +88,13 @@ Router.post('/login', async (request, response) => {
                 username: reqBody.username
             }
 
+            console.log('user1 signature')
+            console.log(signature)
             response
                 .cookie('token', signature, expiry, {
-                    // domain: 'http://localhost',
-                    // path: '/',
-                    // maxAge: 28800, // 8h
+                    domain: process.env.FRONTEND_URL,
+                    path: '/',
+                    maxAge: 28800, // 8h
                     httpOnly: true,
                     secure: true,
                     sameSite: 'none'
@@ -108,11 +110,13 @@ Router.post('/login', async (request, response) => {
                 username: reqBody.username
             }
 
+            console.log('user2 signature')
+            console.log(signature)
             response
                 .cookie('token', signature, expiry, {
-                    // domain: 'http://localhost',
-                    // path: '/',
-                    // maxAge: 28800, // 8h
+                    domain: process.env.FRONTEND_URL,
+                    path: '/',
+                    maxAge: 28800, // 8h
                     httpOnly: true,
                     secure: true,
                     sameSite: 'none'
