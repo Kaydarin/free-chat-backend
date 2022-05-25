@@ -1,6 +1,6 @@
 const CorsMiddleware = async (request, response) => {
 
-    const allowedOrigins = ['http://localhost:3000'];
+    const allowedOrigins = ['http://localhost:3000', process.env.FRONTEND_URL];
     const origin = request.headers.origin;
 
     if (allowedOrigins.includes(origin)) {
