@@ -9,7 +9,7 @@ const CorsMiddleware = async (request, response) => {
 
     response.header("Access-Control-Allow-Credentials", "true");
     response.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    response.header("Access-Control-Allow-Headers", "Accept, Accept-Encoding, Referer, Origin, Content-Type, X-Requested-With");
+    response.header("Access-Control-Allow-Headers", "Accept, Accept-Encoding, Referer, Origin, Content-Type, X-Requested-With, Set-Cookie");
 }
 
 export default CorsMiddleware;

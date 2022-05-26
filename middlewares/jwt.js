@@ -2,7 +2,8 @@ import * as jose from 'jose';
 
 const JwtMiddleware = (request, response, next) => {
 
-    if (request.path !== '/api/login' || request.path !== '/ws/connect') {
+
+    if (request.path !== '/api/login' && request.path !== '/ws/connect') {
         response.atomic(async () => {
             if (request.cookies.token || request.query_parameters.token) {
 
@@ -35,9 +36,6 @@ const JwtMiddleware = (request, response, next) => {
                     }
 
                 } catch (e) {
-
-                    console.log(request.path)
-                    console.log(e)
 
                     if (e.code == 'ERR_JWT_EXPIRED') {
                         response.status(403)
